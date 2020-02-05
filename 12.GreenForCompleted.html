@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <title>
+
+    </title>
+    <body>
+        <div id="root">
+
+        </div>
+        <script src="./js/react.development.js"></script>
+        <script src="./js/react-dom.development.js"></script>
+        <script src="./js/babel.js"></script>
+        <script type="text/babel">
+            const rootHandle=document.getElementById('root')
+            const tasks=[
+                {id:1,title:'deploy software',isCompleted:false},
+                {id:2,title:'db backup',isCompleted:true},
+                {id:3,title:'write test',isCompleted:true},
+                {id:4,title:'api',isCompleted:false},
+            ]
+
+            const ele=
+            <div>
+                    {
+                        tasks.map(function(ele){
+                            return ele.isCompleted==true?<li style={{color:'red'}}>{ele.title}</li>:<li style={{color:'green'}}>{ele.title}</li>
+                        })
+                    }
+            </div>
+            ReactDOM.render(ele,rootHandle)
+
+        </script>
+
+    </body>
+</html>
