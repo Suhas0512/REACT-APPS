@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <title>
+
+    </title>
+    <body>
+        <div id="root">
+
+        </div>
+        <script src="./js/react.development.js"></script>
+        <script src="./js/react-dom.development.js"></script>
+        <script src="./js/babel.js"></script>
+        <script type="text/babel">
+            const rootHandle=document.getElementById('root')
+            class EnterDetails extends React.Component{
+                constructor(){
+                    super()
+                    this.state={
+                        username:'',
+                        isSubmitted:false
+
+                    }
+                }
+                handleUserNameChange=(e)=>{
+                    const username=e.target.value
+                    this.setState({username})
+                }
+                handleSubmit=(e)=>{
+                    e.preventDefault()
+                    this.setState({isSubmitted:true})
+                }
+                render(){
+                    return (
+                        <div>
+                            <h1>Registration Form</h1>
+                            <form onSubmit={this.handleSubmit}>
+                                <label htmlFor="username">username</label>
+                                <input type="text" id ="username" value={this.state.username} onChange={this.handleUserNameChange}/>
+                                <input type="submit"/>
+                    
+                            </form>
+                            {this.state.isSubmitted==true && <h2>your name has {this.state.username.length} characters</h2>}
+                        </div>
+                    )
+                }
+            }
+            ReactDOM.render(<EnterDetails/>,rootHandle)
+        </script>
+
+    </body>
+</html>

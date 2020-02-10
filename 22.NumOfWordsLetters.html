@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <title>
+
+    </title>
+    <body>
+        <div id="root">
+
+        </div>
+        <script src="./js/react.development.js"></script>
+        <script src="./js/react-dom.development.js"></script>
+        <script src="./js/babel.js"></script>
+        <script type="text/babel">
+            const rootHandle=document.getElementById('root')
+            class TextFeild extends React.Component{
+                constructor(){
+                    super()
+                    this.state={
+                        words:'',
+                        arr:[]
+                    }
+                }
+                handleWords=(e)=>{
+                    const words=e.target.value
+                    this.setState({words})
+                }
+                render(){
+                    return(
+                        <div>
+                            <h1>Word Count</h1>
+                            <textarea id="textArea" value={this.state.words} onChange={this.handleWords}/>
+                            <h1>total characters={this.state.words.split(' ').length} {this.state.words.length}</h1>
+                        
+                        </div>
+                    )
+                }
+            } 
+            ReactDOM.render(<TextFeild/>,rootHandle)
+        </script>
+
+    </body>
+</html>

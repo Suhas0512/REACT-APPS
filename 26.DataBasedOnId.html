@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <title>
+        Get name by id
+    </title>
+    <body bgcolor="pink">
+        <div id="root">
+
+        </div>
+        <script src="./js/react.development.js"></script>
+        <script src="./js/react-dom.development.js"></script>
+        <script src="./js/babel.js"></script>
+        <script type="text/babel">
+            const rootHandle=document.getElementById('root')
+            class UserList extends React.Component{
+                constructor(){
+                    super()
+                    this.state={
+                        id:0,
+                        users:{}
+                    }
+                }
+                handleSubmit=(e)=>{
+                    e.preventDefault()
+                    const xhr=new XMLHttpRequest()
+                    xhr.open('GET',`https://cors-anywhere.herokuapp.com/https://jsonplaceholder.typicode.com/users/${this.state.id}`)
+                    xhr.send()
+                    xhr.onload=()=>{
+                        const users=JSON.parse(xhr.responseText)
+                        this.setState({users})
+                    }
+                }
+                handleChange=(e)=>{
+                    const id=e.target.value
+                    this.setState({id})
+                }
+                render(){
+                    return(
+                        <div align ="center">
+                            <h2 style={{color:"blue"}}>Enter the id to get the details</h2>
+                            <form onSubmit={this.handleSubmit}>
+                                <input type="text" placeholder="Enter Id" onChange={this.handleChange}/>
+                                <input type="submit"/>
+                                <h3>{this.state.users.name}
+                                {this.state.users.email}
+                                {this.state.users.username}</h3>
+                            </form>
+                        </div>
+                    )
+                }
+            }
+            ReactDOM.render(<UserList/>,rootHandle)
+        </script>
+
+    </body>
+</html>

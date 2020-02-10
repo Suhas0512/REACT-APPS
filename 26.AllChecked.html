@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <title>
+
+    </title>
+    <body>
+        <div id="root">
+
+        </div>
+        <script src="./js/react.development.js"></script>
+        <script src="./js/react-dom.development.js"></script>
+        <script src="./js/babel.js"></script>
+        <script type="text/babel">
+            const rootHandle=document.getElementById('root')
+            class Data extends React.Component{
+                constructor(){
+                    super()
+                    this.state={
+                    tasks:[
+                            {id:1,title:'Server Deploy', completed:false},
+                            {id:2,title:'DB Backup', completed:false},
+                            {id:3,title:'Admin Dashboard', completed:false},
+                            {id:4,title:'Create new app',completed:false}
+                        ]
+                    }
+                }
+                handleChange=()=>{
+                    this.setState(prevState=>{
+                        return{
+                            tasks:prevState.tasks.map(ele=>{
+                                if(!ele.completed){
+                                    return Object.assign({},ele,{completed:!ele.completed})
+                                }else{
+                                    return Object.assign({},ele,{completed:!ele.completed})
+                                }
+                            })
+                        }
+                    })
+                }
+                render(){
+                    return(
+                        <div align="center">
+                            <h2>Mark all as complete</h2>
+                            <table border="3">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox"  onChange={this.handleChange}/></th>
+                                        <th>Title</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.state.tasks.map(ele=>{
+                                        return(
+                                            <tr key={ele.id}>
+                                                <td><input type="checkbox" checked={ele.completed} disabled={true}/></td>
+                                                <td>{ele.title}</td>
+                                                <td>{ele.completed?'Completed':'Pending'}</td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    )
+                }
+            }
+            ReactDOM.render(<Data/>,rootHandle)
+        </script>
+
+    </body>
+</html>

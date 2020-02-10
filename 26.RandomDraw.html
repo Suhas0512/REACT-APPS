@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <title>
+
+    </title>
+    <body>
+        <div id="root">
+
+        </div>
+        <script src="./js/react.development.js"></script>
+        <script src="./js/react-dom.development.js"></script>
+        <script src="./js/babel.js"></script>
+        <script type="text/babel">
+            const rootHandle=document.getElementById('root')
+            class Progress extends React.Component{
+                constructor(){
+                    super()
+                    this.state={
+                        users:[
+                            {id:1,title:'user1'},
+                            {id:2,title:'user2'},
+                            {id:3,title:'user3'},
+                            {id:4,title:'user4'}
+                        ],
+                        removedName:''
+                    }
+                }
+                handleDraw=()=>{
+                    const rand=Math.floor(Math.random()*this.state.users.length)
+                    const remove=this.state.users.filter(ele=>this.state.users.indexOf(ele)==rand)
+                    const users=this.state.users.filter(ele=>this.state.users.indexOf(ele)!=rand)
+                    this.setState({users,removedName:remove[0]==undefined?'All Drawn':remove[0].title})
+                }
+                render(){
+                    return(
+                        <div >
+                        <h1>Users</h1>
+                        <h3>{this.state.removedName}</h3>
+                            <ul>
+                                {this.state.users.map(ele=>{
+                                    return(
+                                        <li key={ele.id}>{ele.title}</li>
+                                    )
+                                })}
+                            </ul>
+                            <button onClick={this.handleDraw}>Draw</button>
+                        </div>
+                    )
+                }
+            }
+            ReactDOM.render(<Progress/>,rootHandle)
+        </script>
+
+    </body>
+</html>

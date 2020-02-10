@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Ass3</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+    <script type="text/babel">
+      const rootHandle = document.getElementById("root");
+
+      class TableDel extends React.Component {
+        constructor() {
+          super();
+          this.state = {
+            username: [
+              { name: 'user1'},
+              { name: 'user2'},
+              { name: 'user3'},
+              { name: 'user4' }
+            ]
+          };
+        }
+        handleDeleteName = (e) => {
+          let value = prompt('Enter the name');
+
+          let temp = this.state.username.filter(function(ele) {
+            return value !== ele.name;
+          });
+
+          const finder = temp.find(function(ele) {
+            return ele.name == e;
+          });
+          finder == undefined
+            ? this.setState({ username: temp })
+            : alert("Invalid name");
+        };
+        render() {
+          return (
+            <div>
+              <h1>Names Delete</h1>
+              <table border="3">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Buttons</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.username.map((ele) => {
+                    return (
+                      <tr key={ele.name}>
+                        <td>{ele.name}</td>
+                        <td>
+                          <button
+                            onClick={() => this.handleDeleteName(ele.name)}
+                            value={ele.name}
+                          >
+                            show
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<TableDel />, rootHandle);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Assignement 4 - TableList</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+    <script type="text/babel">
+      const rootHandle = document.getElementById("root");
+      const users = [
+          {id:1,name:'user1',email:'user1@gmail.com'},
+          {id:2,name:'user2',email:'user2@gmail.com'},
+          {id:3,name:'user3',email:'user3@gmail.com'},
+          {id:4,name:'user4',email:'user4@gmail.com'}
+      ]
+
+      class TableList extends React.Component {
+        constructor() {
+          super();
+          this.state = {
+            ele: ""
+          };
+        }
+
+        radioTable = () => {
+          const ele = (
+            <div>
+              <table border="5">
+                <thead>
+                  <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {users.map(ele=>{
+                    return (
+                      <tr key={ele.id}>
+                        <td>{ele.id}</td>
+                        <td>{ele.name}</td>
+                        <td>{ele.email}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )
+          this.setState({ ele });
+        }
+
+        radioList = () => {
+          const ele = (
+            <ul>
+              {users.map(ele=> {
+                return <li key={ele.id}>{ele.name}</li>;
+              })}
+            </ul>
+          );
+          this.setState({ ele });
+        };
+
+        render() {
+          return (
+            <div>
+              <form>
+                <label htmlFor="table">Table</label>
+                <input type="radio" id="table" name="radio" onClick={this.radioTable} />
+                <label htmlFor="list">List</label>
+                <input type="radio" id="list" name="radio" onClick={this.radioList} />
+              </form>
+              {this.state.ele}
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<TableList />, rootHandle);
+    </script>
+  </body>
+</html>

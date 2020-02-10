@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <title>
+
+    </title>
+    <body>
+        <div id="root">
+
+        </div>
+        <script src="./js/react.development.js"></script>
+        <script src="./js/react-dom.development.js"></script>
+        <script src="./js/babel.js"></script>
+        <script type="text/babel">
+            const rootHandle=document.getElementById('root')
+            class Users extends React.Component{
+                constructor(){
+                    super()
+                    this.state={
+                        users:[
+                            {id:1,name:'user1',email:'user1@gmail.com'},
+                            {id:2,name:'user2',email:'user2@gmail.com'},
+                            {id:3,name:'user3',email:'user3@gmail.com'},
+                            {id:4,name:'user4',email:'user4@gmail.com'}
+                        ],
+                        email:''
+                    }
+                }
+                handleEmail=(e)=>{
+                    const email=e.target.value
+                    this.setState({email})
+                }
+                handleButton=(e)=>{
+                    let result=this.state.users.filter((ele)=>{
+                        return ele.email!=this.state.email
+                    })
+                    this.setState({users:result})
+                }
+                render(){
+                    return(
+                    <div>
+                        <table border="2">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>name</th>
+                                    <th>email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.state.users.map(function(ele){
+                                    return(
+                                    <tr key={ele.id}>
+                                        <td>{ele.id}</td>
+                                        <td>{ele.name}</td>
+                                        <td>{ele.email}</td>
+                                    </tr>)
+                                })}
+                            </tbody>
+                        </table><br/>
+
+                        <form>
+                            <input onChange={this.handleEmail}/>
+                            <input type="button" value="Submit" onClick={this.handleButton}/>
+                        </form>
+                    </div>)
+                }
+            }
+            ReactDOM.render(<Users/>,rootHandle)
+        </script>
+
+    </body>
+</html>

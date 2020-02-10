@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <title>
+
+    </title>
+    <body>
+        <div id="root">
+
+        </div>
+        <script src="./js/react.development.js"></script>
+        <script src="./js/react-dom.development.js"></script>
+        <script src="./js/babel.js"></script>
+        <script type="text/babel">
+            const rootHandle=document.getElementById('root')
+            class List extends React.Component{
+                constructor(){
+                    super()
+                    this.state={
+                        tasks:[
+                            {id:1,title:'get the website live',completed:true},
+                            {id:2,title:'work on user validation',completed:false},
+                            {id:3,title:'automatate the process',completed:false}
+                        ]
+                    }
+                }
+                handleCheckBox=(id)=>{
+                    this.setState(prevState=>{
+                        return{
+                            tasks:prevState.tasks.map(task=>{
+                                if(task.id==id){
+                                    return Object.assign({},task,{completed:!task.completed})
+                                }else{
+                                    return Object.assign({},task)
+                                }
+                            })
+                        }
+                    })
+                }
+
+                render(){
+                    console.log(this.state)
+                    return(
+                        <div align = "center">
+                            <h2>Listing Tasks - {this.state.tasks.length}</h2>
+                            {
+                                this.state.tasks.map(ele=>{
+                                    return(
+                                        <li key={ele.id}><label htmlFor={ele.id}>{ele.completed?<del>{ele.title}</del>:ele.title}</label>
+                                        <input type="checkbox" id={ele.id} checked={ele.completed} onChange={()=>{this.handleCheckBox(ele.id)}}/>
+                                        </li>
+                                    )
+                                })
+                            }
+                        </div>
+                    )
+                }
+            }
+            ReactDOM.render(<List/>,rootHandle)
+        </script>
+
+    </body>
+</html>

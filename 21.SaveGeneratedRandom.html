@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <title>
+
+    </title>
+    <body>
+        <div id="root">
+
+        </div>
+        <script src="./js/react.development.js"></script>
+        <script src="./js/react-dom.development.js"></script>
+        <script src="./js/babel.js"></script>
+        <script type="text/babel">
+            const rootHandle=document.getElementById('root')
+            class Counter extends React.Component{
+                constructor(){
+                super()
+                this.state={
+                    count:'',
+                    arr:[]
+                }
+            }
+            handleClick=()=>{//instead of binding=>bind(this)
+                this.setState(function(prevState){
+                    let random=(Math.round(Math.random()*10))
+                    return{
+                        count:random,
+                        arr:prevState.arr.concat(random)
+                    }
+                })
+            }
+            render(){
+                return(
+                <div>
+                    <h1>{this.state.count}</h1>
+                    <button onClick={this.handleClick}>Random</button>
+                    {this.state.arr.map((ele,i)=><li key={i}>{ele}</li>)}
+
+                    </div>)
+            }
+        }
+        const ele=(
+            <div>
+                <Counter/>
+                </div>
+        )
+        ReactDOM.render(ele,rootHandle)
+        </script>
+
+    </body>
+</html>
