@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <title>
+
+    </title>
+    <body>
+        <div id="root">
+
+        </div>
+        <script src="./js/react.development.js"></script>
+        <script src="./js/react-dom.development.js"></script>
+        <script src="./js/babel.js"></script>
+        <script type="text/babel">
+            const rootHandle=document.getElementById('root')
+            class Local_storage extends React.Component{
+                constructor(){
+                    super()
+                    this.state={
+                        title:'',
+                        story:''
+                    }
+                }
+                handleChange=(e)=>{
+                    this.setState({title:e.target.value})
+                }
+                handleStory=(e)=>{
+                    this.setState({story:e.target.value})
+                }
+                handleSave=()=>{
+                    localStorage.setItem("title",this.state.title)
+                    localStorage.setItem("story",this.state.story)
+                    this.setState({title:'',story:''})
+                }
+                handleGetStory=()=>{
+                    const title=localStorage.getItem("title")
+                    const story=localStorage.getItem("story")
+                    this.setState({title,story})
+                }
+                handleClear=()=>{
+                    localStorage.clear("title","story")
+                }
+                render(){
+                    return(
+                        <div align="center">
+                            <h2>Local Storage</h2>
+                            <p>Title</p>
+                            <input value={this.state.title} onChange={this.handleChange}/>
+                            <p>Story</p>
+                            <textarea cols="50" rows="15" value={this.state.story} onChange={this.handleStory}></textarea><br/>
+                            <button onClick={this.handleGetStory}>Get story</button>
+                            <button onClick= {this.handleSave}>Save</button>
+                            <button onClick={this.handleClear}>Clear</button>
+                        </div>
+                    )
+                }
+            }
+            ReactDOM.render(<Local_storage/>,rootHandle)
+        </script>
+
+    </body>
+</html>
