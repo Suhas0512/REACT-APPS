@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <title>
+
+    </title>
+    <body>
+        <div id="root">
+
+        </div>
+        <script src="./js/react.development.js"></script>
+        <script src="./js/react-dom.development.js"></script>
+        <script src="./js/babel.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script type="text/babel">
+            const rootHandle=document.getElementById('root')
+            class Pagination extends React.Component{
+                constructor(){
+                    super()
+                    this.state={
+                        posts:[],
+                        starting_posts:[],
+                        pagination:10
+                    }
+                }
+                componentDidMount=()=>{
+                    axios.get("http://jsonplaceholder.typicode.com/posts")
+                    .then(response=>{
+                        let posts=response.data
+                        posts=posts.map(ele=>{return ele.title})
+                        const change=posts.slice(0,this.state.pagination)
+                        this.setState({posts:change,starting_posts:posts})
+                    })
+                    
+                }
+                handleButton=()=>{
+                    const posts=this.state.starting_posts.slice(0,this.state.pagination+10)
+                    this.setState({posts,pagination:this.state.pagination+10})
+                }
+                render(){
+                    return(
+                    <div>
+                        <h2>My pagination</h2>
+                        <ol>
+                        {this.state.posts.map(ele=>{
+                            return(
+                                <li key={ele}>{ele}</li>
+                            )
+                        })}
+                        </ol>
+                        <button onClick={this.handleButton}>More</button>
+                        <p>Displaying {this.state.pagination} posts out of {this.state.starting_posts.length} posts</p>
+                    </div>
+                    )
+                }
+            }
+            ReactDOM.render(<Pagination/>,rootHandle)
+        </script>
+
+    </body>
+</html>
