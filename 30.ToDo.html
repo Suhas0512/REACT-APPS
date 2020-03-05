@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <title>
+
+    </title>
+    <body>
+        <div id="root">
+
+        </div>
+        <script src="./js/react.development.js"></script>
+        <script src="./js/react-dom.development.js"></script>
+        <script src="./js/babel.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script type="text/babel">
+            const rootHandle=document.getElementById('root')
+            class ToDO extends React.Component{
+                constructor(){
+                    super()
+                    this.state={
+                        users:[],
+                        todo:[]
+                    }
+                }
+                componentDidMount=()=>{
+                    Promise.all([axios.get('https://jsonplaceholder.typicode.com/users'),axios.get('https://jsonplaceholder.typicode.com/todos')])
+                    .then(values=>{
+                        this.setState({
+                            users:values[0].data,todo:values[1].data
+                        })
+                    })
+                }
+                render(){
+                    console.log(this.state)
+                    return(
+                        <div>
+                            <h2>Users To-Do count</h2>
+                            {
+                                this.state.users && this.state.users.map(ele=>{
+                                    return <dt key={ele.id}>{ele.name} 
+                                    <p>{this.state.todo.filter(ele1=>ele1.userId==ele.id).length}</p>
+                                    </dt>
+                                })
+                            }
+                        </div>
+                    )
+                }
+            }
+            ReactDOM.render(<ToDO/>,rootHandle)
+        </script>
+
+    </body>
+</html>
